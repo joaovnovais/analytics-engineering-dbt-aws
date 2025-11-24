@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Tabela de dimensão de clientes enriquecida com métricas de compras."
+    
+    # --- MUDANÇA AQUI ---
+    # Testes de Nível de Tabela (ficam indentados na mesma linha de 'columns')
+    # Estes testes comparam duas colunas, então não pertencem a uma coluna só.
+    tests:
+      - dbt_expectations.expect_column_pair_values_A_to_be_greater_than_B:
+          column_A: most_recent_order_date
+          column_B: first_order_date
+          or_equal: true
+    # --------------------
+
+    columns:
+      - name: customer_id
+        description: "Chave primária única do cliente."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_state
+        description: "Sigla do estado do cliente."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_value_lengths_to_equal:
+              value: 2
+
+      - name: number_of_orders
+        description: "Contagem total de pedidos realizados pelo cliente."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 10000
+
+      - name: most_recent_order_date
+        description: "Data do último pedido realizado."
+        # Removemos o teste daqui, pois ele subiu para o nível da tabela

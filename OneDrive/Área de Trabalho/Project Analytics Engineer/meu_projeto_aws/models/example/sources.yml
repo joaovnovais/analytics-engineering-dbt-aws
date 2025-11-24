@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: olist_raw
+    database: awsdatacatalog
+    schema: raw_db
+
+    # CORREÇÃO: Adicionamos o sufixo '_csv' em todos os nomes
+    tables:
+      - name: olist_customers_dataset_csv
+      - name: olist_geolocation_dataset_csv
+      - name: olist_order_items_dataset_csv
+      - name: olist_order_payments_dataset_csv
+      - name: olist_order_reviews_dataset_csv
+      - name: olist_orders_dataset_csv
+      - name: olist_products_dataset_csv
+      - name: olist_sellers_dataset_csv
+      - name: product_category_name_translation_csv

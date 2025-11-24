@@ -1,0 +1,8 @@
+target/
+dbt_packages/
+logs/
+.DS_Store
+.venv/
+dbt_modules/
+profiles.yml
+secrets.env
